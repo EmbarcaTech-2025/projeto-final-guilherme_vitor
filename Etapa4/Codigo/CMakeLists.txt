@@ -35,7 +35,13 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(robo robo.c )
+add_executable(robo 
+        robo.c 
+        hal/garra.c
+        hal/tcs.c
+        hal/wifi.c
+        hal/mqtt.c
+        )
 
 pico_set_program_name(robo "robo")
 pico_set_program_version(robo "0.1")
@@ -51,6 +57,7 @@ target_link_libraries(robo
 # Add the standard include files to the build
 target_include_directories(robo PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/inc
 )
 
 # Add any user requested libraries
@@ -59,7 +66,10 @@ target_link_libraries(robo
         hardware_pwm
         hardware_adc
         hardware_i2c
-)
+        pico_cyw43_arch_lwip_threadsafe_background
+        pico_lwip
+        pico_lwip_mqtt
+        )
 
 pico_add_extra_outputs(robo)
 
